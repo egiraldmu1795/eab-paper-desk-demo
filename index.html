@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EAB Paper Desk • Trading Gate (MVP)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --green: #34d35a; }
+    body { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .card { background: #111113; border: 1px solid #222225; }
+    .pill { font-size: 10px; letter-spacing: .5px; padding: 1px 8px; border-radius: 999px; }
+    .buy { background: #052e16; color: #34d35a; border: 1px solid #166534; }
+    .sell { background: #3f1a1a; color: #f87171; border: 1px solid #7f1d1d; }
+    .hold { background: #1f2937; color: #9ca3af; border: 1px solid #374151; }
+    .status-pending { background: #1e2937; color: #eab308; border: 1px solid #713f12; }
+    .status-approved { background: #052e16; color: #34d35a; border: 1px solid #166534; }
+    .status-rejected { background: #3f1a1a; color: #f87171; border: 1px solid #7f1d1d; }
+    .ticker { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-weight: 700; letter-spacing: .5px; }
+    .section-title { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: #6b7280; }
+    pre.brief { white-space: pre-wrap; font-size: 12px; line-height: 1.45; background: #0a0a0c; padding: 12px; border-radius: 6px; border: 1px solid #222; max-height: 260px; overflow: auto; }
+    .toast { position: fixed; bottom: 16px; right: 16px; background: #111; border: 1px solid #333; color: #ddd; padding: 10px 14px; border-radius: 6px; font-size: 13px; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
+    .inv { font-size: 10px; background: #1f2937; color: #f59e0b; padding: 2px 6px; border-radius: 3px; }
+  </style>
+</head>
+<body class="bg-[#0a0a0a] text-gray-200">
+  <div class="max-w-[1100px] mx-auto p-4">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded bg-[#34d35a] text-black flex items-center justify-center font-bold text-xl">S</div>
+          <div>
+            <div class="text-2xl font-semibold tracking-tighter">EAB Paper Desk</div>
+            <div class="text-xs text-gray-500 -mt-1">Trading Gate • MVP</div>
+          </div>
+          <div class="inv font-mono">PAPER-ONLY • ADR-0004</div>
+        </div>
+      </div>
+      <div class="text-right text-xs">
+        <div id="status-line" class="font-mono text-gray-400">loading…</div>
+        <div class="text-[10px] text-gray-500">in-process gate • no live broker • no money movement</div>
+      </div>
+    </div>
+
+    <!-- Actions bar -->
+    <div class="flex flex-wrap gap-2 mb-4">
+      <button onclick="refreshAll()" 
+              class="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10 text-sm border border-white/10">↻ Refresh All</button>
+      <button onclick="loadBrief()" 
+              class="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10 text-sm border border-white/10">Load Fresh Committee Brief</button>
+      <button onclick="togglePropose()" 
+              class="px-3 py-1.5 rounded bg-[#34d35a] text-black font-medium text-sm">+ Manual Propose</button>
+      <div class="flex-1"></div>
+      <div class="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 self-center">
+        connected to <span class="font-mono">signals_standalone.gate</span> (in-process)
+      </div>
+    </div>
+
+    <!-- Status strip -->
+    <div id="status-strip" class="mb-4 grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
+      <!-- populated by JS -->
+    </div>
+
+    <!-- Signals / Committee Brief -->
+    <div class="card rounded-xl p-4 mb-4">
+      <div class="flex items-center justify-between mb-2">
+        <div class="section-title">Signals → Committee Brief (live from public feeds)</div>
+        <div class="text-[10px] text-gray-500">congress + senate + insider (Form 4). paper-first. not advice.</div>
+      </div>
+      <div id="brief-box" class="pre brief text-gray-300 min-h-[80px]">Click "Load Fresh Committee Brief" above to fetch the current combined brief (runs the three disclosure feeds in-process).</div>
+    </div>
+
+    <!-- Pending Approvals -->
+    <div class="mb-4">
+      <div class="flex items-baseline justify-between mb-2">
+        <div class="section-title">Pending Approvals Queue <span id="pending-count" class="font-mono text-gray-400">(?)</span></div>
+        <div class="text-xs text-gray-500">approve/reject = record human intent only. no execution.</div>
+      </div>
+      <div id="pending-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <!-- cards injected by JS -->
+      </div>
+      <div id="pending-empty" class="hidden text-sm text-gray-500 border border-dashed border-white/10 rounded p-4">No pending proposals. Use "Manual Propose", run a committee, or `python -m signals_standalone gate committee ...`.</div>
+    </div>
+
+    <!-- Recent Decisions -->
+    <div class="mb-4">
+      <div class="section-title mb-2">Recent Decisions (last approved / rejected)</div>
+      <div id="recent-list" class="text-sm space-y-1.5">
+        <!-- rows by JS -->
+      </div>
+    </div>
+
+    <!-- Manual Propose (collapsible) -->
+    <div id="propose-box" class="card rounded-xl p-4 hidden">
+      <div class="section-title mb-2">Manual Propose (creates pending_approval)</div>
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-2">
+        <input id="p-ticker" placeholder="TICKER e.g. NVDA" class="bg-black/40 border border-white/10 rounded px-3 py-1.5 text-sm font-mono uppercase" />
+        <select id="p-side" class="bg-black/40 border border-white/10 rounded px-3 py-1.5 text-sm">
+          <option value="buy">BUY</option>
+          <option value="sell">SELL</option>
+          <option value="short">SHORT</option>
+          <option value="cover">COVER</option>
+        </select>
+        <input id="p-conf" type="number" step="0.05" min="0" max="1" placeholder="conf 0.6" value="0.65" class="bg-black/40 border border-white/10 rounded px-3 py-1.5 text-sm" />
+        <input id="p-src" value="trading-app-mvp" class="bg-black/40 border border-white/10 rounded px-3 py-1.5 text-sm col-span-2 md:col-span-1" />
+        <textarea id="p-rationale" placeholder="Rationale / committee verdict / levels..." rows="2" class="bg-black/40 border border-white/10 rounded px-3 py-1.5 text-sm md:col-span-5"></textarea>
+      </div>
+      <div class="mt-2 flex gap-2">
+        <button onclick="doPropose()" class="px-4 py-1.5 rounded bg-white text-black text-sm font-medium">Submit Proposal → Pending</button>
+        <button onclick="togglePropose()" class="px-3 py-1.5 rounded bg-white/5 text-sm border border-white/10">Cancel</button>
+      </div>
+      <div class="text-[10px] text-amber-400 mt-1">This will appear in the queue above and in `python -m signals_standalone gate pending`. Still 100% paper.</div>
+    </div>
+
+    <div class="mt-6 text-[10px] text-gray-500 flex items-center gap-2">
+      <span class="inv">ADR-0004 ENFORCED</span>
+      <span>Approval records HUMAN INTENT only. would_execute_live() is structurally False. executed_live=False re-asserted on every decide(). No broker, no live orders, no money movement, no outward publish. All state lives in data/trading/proposals.jsonl (or $EAB_DATA_DIR/trading/).</span>
+    </div>
+  </div>
+
+  <div id="toast" class="hidden toast"></div>
+
+  <script>
+    // Tailwind script run
+    function initTailwind() {
+      // already loaded via CDN; small runtime tweaks if needed
+    }
+
+    let DEMO_MODE = false;
+    const DEMO_PROPOSALS = [
+      { id: "prop_demo1", status: "pending_approval", paper: true, executed_live: false, ticker: "NVDA", side: "buy", size: null, rationale: "Fast Mover Watch early momentum at open. Committee: strong volume + insider cluster. Risk $0.4/share. 10AM lock target.", confidence: 0.72, source: "tradingagents-committee", created_at: Math.floor(Date.now()/1000)-1800, approved_by: null, approved_at: null },
+      { id: "prop_demo2", status: "pending_approval", paper: true, executed_live: false, ticker: "SHOP", side: "buy", size: 180, rationale: "Kamden-style: ENTRY ~110.7 | ALERT 111.95 | DO NOT AFTER 112.8 | QUICK 112.9. +$5.01 example in history.", confidence: 0.61, source: "fastmover-watch", created_at: Math.floor(Date.now()/1000)-4200, approved_by: null, approved_at: null },
+      { id: "prop_demo3", status: "pending_approval", paper: true, executed_live: false, ticker: "SOFI", side: "sell", size: null, rationale: "Committee verdict SELL after 2nd opinion. Risk off into macro print.", confidence: 0.55, source: "second_opinion", created_at: Math.floor(Date.now()/1000)-7200, approved_by: null, approved_at: null }
+    ];
+    let localDemoState = JSON.parse(JSON.stringify(DEMO_PROPOSALS));
+
+    function showToast(msg, ms=2400) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('hidden'), ms);
+    }
+
+    async function api(path, opts = {}) {
+      if (DEMO_MODE) {
+        // Simulate in demo mode
+        if (path === '/api/gate/status') {
+          const pending = localDemoState.filter(p => p.status === 'pending_approval').length;
+          return { ok: true, paper_only: true, live_broker_wired: false, pending, note: "DEMO MODE (no server) — actions simulated in localStorage" };
+        }
+        if (path === '/api/gate/pending') {
+          const rows = localDemoState.filter(p => p.status === 'pending_approval');
+          return { ok: true, count: rows.length, proposals: rows };
+        }
+        if (path === '/api/gate/recent') {
+          const rows = localDemoState.filter(p => p.status !== 'pending_approval').slice(0,12);
+          return { ok: true, count: rows.length, proposals: rows };
+        }
+        if (path === '/api/brief') {
+          return { ok: true, brief: "DEMO MODE — real brief requires the stdlib server (python server.py).\n\n# EAB committee signal brief\n\n**congress** (last 30d) — 3 actionable disclosures (example data).\n..." };
+        }
+        if (path === '/api/gate/approve' || path === '/api/gate/reject') {
+          const { id } = opts.body || {};
+          const approve = path.endsWith('approve');
+          const idx = localDemoState.findIndex(p => p.id === id);
+          if (idx >= 0) {
+            localDemoState[idx].status = approve ? 'approved_paper' : 'rejected';
+            localDemoState[idx].approved_by = 'grok-mvp-scaffold';
+            localDemoState[idx].approved_at = Math.floor(Date.now()/1000);
+            localDemoState[idx].decision_note = approve ? 'scaffold approve (demo)' : 'scaffold reject (demo)';
+          }
+          return { ok: true, proposal: localDemoState[idx], note: "DEMO — simulated only" };
+        }
+        if (path === '/api/gate/propose') {
+          const p = opts.body || {};
+          const rec = {
+            id: 'prop_demo' + Math.random().toString(36).slice(2,9),
+            status: 'pending_approval', paper: true, executed_live: false,
+            ticker: (p.ticker||'TST').toUpperCase(), side: p.side||'buy', size: null,
+            rationale: p.rationale || 'Manual propose from UI (demo)',
+            confidence: p.confidence || 0.6, source: p.source || 'trading-app-mvp',
+            created_at: Math.floor(Date.now()/1000), approved_by: null, approved_at: null
+          };
+          localDemoState.unshift(rec);
+          return { ok: true, proposal: rec };
+        }
+        return { ok: false, error: 'demo path not stubbed' };
+      }
+
+      // Real fetch
+      const res = await fetch(path, {
+        method: opts.method || 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        body: opts.body ? JSON.stringify(opts.body) : undefined
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }
+
+    async function loadStatus() {
+      try {
+        const s = await api('/api/gate/status');
+        const el = document.getElementById('status-line');
+        const strip = document.getElementById('status-strip');
+        const pending = s.pending ?? '?';
+        el.innerHTML = `paper_only=<span class="text-[#34d35a]">${s.paper_only}</span> • pending=<span class="font-mono">${pending}</span> • live_broker=<span class="text-red-400">${s.live_broker_wired}</span>`;
+        if (s.note) el.title = s.note;
+
+        strip.innerHTML = `
+          <div class="card rounded-lg px-3 py-2 flex items-center gap-2 text-sm">
+            <span class="pill inv">PAPER</span>
+            <span>pending <b class="font-mono">${pending}</b></span>
+          </div>
+          <div class="card rounded-lg px-3 py-2 text-xs text-gray-400">
+            ${s.note || 'ADR-0004: AI proposes, human approves, nothing auto-executes real money.'}
+          </div>
+          <div class="card rounded-lg px-3 py-2 text-xs flex items-center">
+            <span class="text-gray-400">Gate invariant:</span> <span class="ml-1 font-mono text-[#34d35a]">would_execute_live() === false</span>
+          </div>
+        `;
+        if (s.note && s.note.toLowerCase().includes('demo')) {
+          DEMO_MODE = true;
+        }
+      } catch (e) {
+        DEMO_MODE = true;
+        document.getElementById('status-line').innerHTML = `<span class="text-amber-400">DEMO MODE</span> (server not reachable — using localStorage simulation)`;
+        document.getElementById('status-strip').innerHTML = `
+          <div class="card rounded-lg px-3 py-2 text-xs">Running in demo mode. Connect the server (python server.py) for live gate mutations.</div>
+        `;
+      }
+    }
+
+    async function loadPending() {
+      const grid = document.getElementById('pending-grid');
+      const empty = document.getElementById('pending-empty');
+      grid.innerHTML = '';
+      empty.classList.add('hidden');
+
+      try {
+        const data = await api('/api/gate/pending');
+        const rows = data.proposals || [];
+        document.getElementById('pending-count').textContent = `(${rows.length})`;
+
+        if (rows.length === 0) {
+          empty.classList.remove('hidden');
+          return;
+        }
+        rows.forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'card rounded-xl p-3 flex flex-col';
+          const sideClass = (p.side === 'buy' || p.side === 'cover') ? 'buy' : (p.side === 'sell' || p.side === 'short') ? 'sell' : 'hold';
+          const created = p.created_at ? new Date(p.created_at * 1000).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
+          card.innerHTML = `
+            <div class="flex items-start justify-between">
+              <div>
+                <span class="ticker text-xl">${p.ticker}</span>
+                <span class="pill ml-2 align-middle ${sideClass}">${(p.side||'').toUpperCase()}</span>
+              </div>
+              <div class="text-right">
+                <div class="text-[10px] text-gray-400">${created}</div>
+                <div class="pill status-pending mt-0.5">PENDING</div>
+              </div>
+            </div>
+            <div class="mt-1 text-xs text-gray-400">conf <span class="font-mono text-gray-300">${p.confidence ?? '—'}</span> • source <span class="font-mono">${p.source || 'committee'}</span></div>
+            <div class="mt-1 text-sm line-clamp-3 text-gray-300">${(p.rationale || '').slice(0,280)}</div>
+            <div class="mt-2 flex gap-2">
+              <button data-id="${p.id}" data-action="approve" class="flex-1 px-2 py-1 text-xs rounded bg-[#34d35a] text-black font-medium hover:brightness-95">Approve (paper)</button>
+              <button data-id="${p.id}" data-action="reject" class="flex-1 px-2 py-1 text-xs rounded bg-white/10 hover:bg-white/15 border border-white/10">Reject</button>
+            </div>
+            <div class="mt-1 text-[10px] text-gray-500">id: ${p.id}</div>
+          `;
+          // wire buttons
+          card.querySelectorAll('button').forEach(btn => {
+            btn.onclick = async () => {
+              const id = btn.dataset.id;
+              const approve = btn.dataset.action === 'approve';
+              btn.disabled = true;
+              try {
+                const by = 'grok-mvp-scaffold';
+                const note = approve ? 'approved via trading-app MVP scaffold' : 'rejected via trading-app MVP scaffold';
+                await api(approve ? '/api/gate/approve' : '/api/gate/reject', { method: 'POST', body: { id, by, note } });
+                showToast(approve ? 'Approved (paper intent recorded)' : 'Rejected');
+                await refreshAll();
+              } catch (e) {
+                showToast('Action failed: ' + e.message);
+              } finally {
+                btn.disabled = false;
+              }
+            };
+          });
+          grid.appendChild(card);
+        });
+      } catch (e) {
+        // demo fallback already handled in api()
+        document.getElementById('pending-count').textContent = '(demo)';
+        empty.classList.remove('hidden');
+        empty.textContent = 'Demo proposals shown below. Start the server for real mutations.';
+        // render demo cards
+        DEMO_PROPOSALS.forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'card rounded-xl p-3 flex flex-col opacity-90';
+          const sideClass = (p.side === 'buy') ? 'buy' : 'sell';
+          card.innerHTML = `
+            <div class="flex items-start justify-between">
+              <div><span class="ticker text-xl">${p.ticker}</span><span class="pill ml-2 align-middle ${sideClass}">${p.side.toUpperCase()}</span></div>
+              <div class="text-right"><div class="pill status-pending">PENDING (demo)</div></div>
+            </div>
+            <div class="mt-1 text-xs text-gray-400">conf ${p.confidence} • ${p.source}</div>
+            <div class="mt-1 text-sm text-gray-300 line-clamp-3">${p.rationale}</div>
+            <div class="mt-2 flex gap-2">
+              <button data-id="${p.id}" data-action="approve" class="flex-1 px-2 py-1 text-xs rounded bg-[#34d35a] text-black font-medium">Approve (sim)</button>
+              <button data-id="${p.id}" data-action="reject" class="flex-1 px-2 py-1 text-xs rounded bg-white/10">Reject (sim)</button>
+            </div>
+            <div class="text-[10px] text-amber-400 mt-1">SIMULATED — real actions require python server.py</div>
+          `;
+          card.querySelectorAll('button').forEach(btn => {
+            btn.onclick = async () => {
+              const id = btn.dataset.id;
+              const approve = btn.dataset.action === 'approve';
+              await api(approve ? '/api/gate/approve' : '/api/gate/reject', { method: 'POST', body: { id } });
+              await refreshAll();
+            };
+          });
+          grid.appendChild(card);
+        });
+      }
+    }
+
+    async function loadRecent() {
+      const list = document.getElementById('recent-list');
+      list.innerHTML = '';
+      try {
+        const data = await api('/api/gate/recent');
+        const rows = data.proposals || [];
+        if (rows.length === 0) {
+          list.innerHTML = `<div class="text-gray-500 text-xs">No recent decisions yet.</div>`;
+          return;
+        }
+        rows.forEach(r => {
+          const d = document.createElement('div');
+          d.className = 'flex items-center gap-2 text-xs bg-black/30 rounded px-2 py-1';
+          const st = r.status === 'approved_paper' ? 'status-approved' : 'status-rejected';
+          const when = r.approved_at ? new Date(r.approved_at*1000).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '';
+          d.innerHTML = `
+            <span class="ticker font-mono">${r.ticker}</span>
+            <span class="pill ${r.side==='buy'?'buy':'sell'}">${r.side}</span>
+            <span class="pill ${st}">${r.status}</span>
+            <span class="text-gray-400">by ${r.approved_by || '—'} ${when}</span>
+            <span class="flex-1 truncate text-gray-500">${(r.decision_note||'').slice(0,80)}</span>
+          `;
+          list.appendChild(d);
+        });
+      } catch (e) {
+        list.innerHTML = `<div class="text-amber-400 text-xs">Recent list unavailable in pure demo. Start server for full history.</div>`;
+      }
+    }
+
+    async function loadBrief() {
+      const box = document.getElementById('brief-box');
+      box.textContent = 'Fetching live committee brief (in-process signals_standalone feeds)...';
+      try {
+        const res = await api('/api/brief');
+        box.innerHTML = `<pre class="brief">${res.brief || JSON.stringify(res)}</pre>`;
+      } catch (e) {
+        box.textContent = 'Brief fetch failed. Start `python server.py` from business/trading-app (or repo root) for the real committee_brief().';
+      }
+    }
+
+    function togglePropose() {
+      const box = document.getElementById('propose-box');
+      box.classList.toggle('hidden');
+      if (!box.classList.contains('hidden')) {
+        document.getElementById('p-ticker').focus();
+      }
+    }
+
+    async function doPropose() {
+      const ticker = document.getElementById('p-ticker').value.trim();
+      const side = document.getElementById('p-side').value;
+      const conf = parseFloat(document.getElementById('p-conf').value) || 0.6;
+      const rationale = document.getElementById('p-rationale').value.trim();
+      const src = document.getElementById('p-src').value.trim() || 'trading-app-mvp';
+      if (!ticker) { alert('Ticker required'); return; }
+      try {
+        await api('/api/gate/propose', { method: 'POST', body: { ticker, side, rationale, confidence: conf, source: src } });
+        showToast('Proposal created (now pending)');
+        document.getElementById('propose-box').classList.add('hidden');
+        document.getElementById('p-rationale').value = '';
+        await refreshAll();
+      } catch (e) {
+        showToast('Propose failed: ' + e.message);
+      }
+    }
+
+    async function refreshAll() {
+      await loadStatus();
+      await loadPending();
+      await loadRecent();
+    }
+
+    async function boot() {
+      initTailwind();
+      // Try a status ping to decide demo vs live
+      try {
+        await api('/api/gate/status');
+      } catch (e) {
+        DEMO_MODE = true;
+      }
+      await refreshAll();
+      // gentle auto-refresh of pending + recent (status is cheap)
+      setInterval(async () => {
+        try {
+          await loadPending();
+          await loadRecent();
+          await loadStatus(); // keep the count fresh
+        } catch (_) {}
+      }, 15000);
+      // Keyboard hint
+      console.log('%c[EAB trading-app] Scaffold ready. For real gate: python server.py', 'color:#555');
+    }
+
+    window.onload = boot;
+  </script>
+</body>
+</html>
