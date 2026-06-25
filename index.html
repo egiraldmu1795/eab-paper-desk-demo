@@ -131,11 +131,6 @@
   <div id="toast" class="hidden toast"></div>
 
   <script>
-    // Tailwind script run
-    function initTailwind() {
-      // already loaded via CDN; small runtime tweaks if needed
-    }
-
     let DEMO_MODE = false;
     const DEMO_PROPOSALS = [
       { id: "prop_demo1", status: "pending_approval", paper: true, executed_live: false, ticker: "NVDA", side: "buy", size: null, rationale: "Fast Mover Watch early momentum at open. Committee: strong volume + insider cluster. Risk $0.4/share. 10AM lock target.", confidence: 0.72, source: "tradingagents-committee", created_at: Math.floor(Date.now()/1000)-1800, approved_by: null, approved_at: null },
@@ -409,7 +404,6 @@
     }
 
     async function boot() {
-      initTailwind();
       // Try a status ping to decide demo vs live
       try {
         await api('/api/gate/status');
