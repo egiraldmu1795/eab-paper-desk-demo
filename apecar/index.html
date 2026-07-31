@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Apecar Fast Food — Comida rápida colombiana en West Palm Beach</title>
+<meta name="description" content="Perros, hamburguesas, salchipapas y desgranados colombianos en West Palm Beach. 638 S Military Trail. Abierto de martes a domingo. Pide por WhatsApp al (561) 377-5311.">
+<meta name="theme-color" content="#0B1026">
+
+<meta property="og:type" content="restaurant">
+<meta property="og:title" content="Apecar Fast Food — Vale la pena pecar">
+<meta property="og:description" content="Comida rápida colombiana en West Palm Beach. Perros, burgers, salchipapas y desgranados.">
+<meta property="og:locale" content="es_US">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B1026'/%3E%3Cpath d='M12 40h40' stroke='%23FFC803' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='22' cy='46' r='6' fill='%23E0202E'/%3E%3Ccircle cx='45' cy='46' r='6' fill='%23E0202E'/%3E%3Cpath d='M16 40V27c0-4 3-7 7-7h9l8 10h6c3 0 5 2 5 5v5' fill='none' stroke='%23FFC803' stroke-width='5' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Apecar Fast Food",
+  "servesCuisine": "Colombian",
+  "priceRange": "$",
+  "telephone": "+1-561-377-5311",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "638 S Military Trail",
+    "addressLocality": "West Palm Beach",
+    "addressRegion": "FL",
+    "postalCode": "33415",
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday"], "opens": "16:00", "closes": "23:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday","Sunday"], "opens": "13:00", "closes": "23:00" }
+  ]
+}
+</script>
+
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  MENU DATA — this is the only block you need to edit to change the
+  menu. Add, remove or reprice items here and the whole site updates.
+  Each item: es (Spanish name), en (English name), d_es / d_en
+  (descriptions), price (number, or null to show "Consultar"),
+  pop (true = shows the FAVORITO badge).
+  ═══════════════════════════════════════════════════════════════════
+-->
+<script type="application/json" id="menu-data">
+{
+  "categories": [
+    {
+      "id": "entraditas",
+      "es": "Entraditas",
+      "en": "Starters",
+      "note_es": "Para picar mientras llega lo bueno.",
+      "note_en": "Something to pick at while the good stuff cooks.",
+      "items": [
+        { "es": "Empanadas de Pollo, Carne y Queso", "en": "Chicken, Beef & Cheese Empanadas", "d_es": "Orden de 3.", "d_en": "Order of 3.", "price": 6.99, "pop": true },
+        { "es": "Deditos de Queso", "en": "Cheese Sticks", "d_es": "Crocantes por fuera, fundidos por dentro.", "d_en": "Crispy outside, molten inside.", "price": 5.99, "pop": true },
+        { "es": "Chicken Nuggets", "en": "Chicken Nuggets", "d_es": "Apanados y jugosos.", "d_en": "Breaded and juicy.", "price": 6.99, "pop": false },
+        { "es": "Una Guevonada", "en": "Una Guevonada", "d_es": "Huevos de codorniz, maíz, queso, ripio de papitas y salsa rosada.", "d_en": "Quail eggs, corn, cheese, crushed potato chips and pink sauce.", "price": 8.99, "pop": false }
+      ]
+    },
+    {
+      "id": "perros",
+      "es": "Perros",
+      "en": "Colombian Hot Dogs",
+      "note_es": "El perro caliente como se hace en Colombia: cargado.",
+      "note_en": "The hot dog the Colombian way: fully loaded.",
+      "items": [
+        { "es": "Paisa", "en": "Paisa", "d_es": "Pan, huevo de codorniz, salchicha americana, madurito, tocineta, queso rayado, cebolla caramelizada, ripio de papitas y salsas al gusto.", "d_en": "Bun, quail egg, American sausage, sweet plantain, bacon, shredded cheese, caramelized onion, crushed potato chips and sauces to taste.", "price": 9.99, "pop": true },
+        { "es": "Ranchero", "en": "Ranchero", "d_es": "Pan, huevo de codorniz, salchicha ranchera, maíz, tocineta, queso fundido, cebolla caramelizada, ripio de papitas y salsas al gusto.", "d_en": "Bun, quail egg, ranchera sausage, corn, bacon, melted cheese, caramelized onion, crushed potato chips and sauces to taste.", "price": 10.99, "pop": false },
+        { "es": "Hawaiano", "en": "Hawaiian", "d_es": "Pan, huevo de codorniz, salchicha americana, piña, tocineta, queso rayado, cebolla caramelizada, ripio de papitas y salsas al gusto.", "d_en": "Bun, quail egg, American sausage, pineapple, bacon, shredded cheese, caramelized onion, crushed potato chips and sauces to taste.", "price": 9.99, "pop": false },
+        { "es": "Pecador", "en": "Pecador", "d_es": "Pan, huevo de codorniz, salchicha americana, tocineta, queso rayado, cebolla caramelizada, ripio de papitas y salsas al gusto.", "d_en": "Bun, quail egg, American sausage, bacon, shredded cheese, caramelized onion, crushed potato chips and sauces to taste.", "price": 8.99, "pop": false }
+      ]
+    },
+    {
+      "id": "perras",
+      "es": "Perras",
+      "en": "The Big Dogs",
+      "note_es": "Triple tocineta y triple queso. Avisado quedas.",
+      "note_en": "Triple bacon, triple cheese. You have been warned.",
+      "items": [
+        { "es": "La Loba", "en": "La Loba", "d_es": "Pan, salchicha ranchera, maíz, triple tocineta y queso, ripio de papitas, cebolla caramelizada y salsas al gusto.", "d_en": "Bun, ranchera sausage, corn, triple bacon and cheese, crushed potato chips, caramelized onion and sauces to taste.", "price": 12.99, "pop": true },
+        { "es": "La Perra", "en": "La Perra", "d_es": "Pan, triple tocineta y queso, maíz, ripio de papitas, cebolla caramelizada y salsas al gusto.", "d_en": "Bun, triple bacon and cheese, corn, crushed potato chips, caramelized onion and sauces to taste.", "price": 9.99, "pop": false }
+      ]
+    },
+    {
+      "id": "hamburguesas",
+      "es": "Hamburguesas",
+      "en": "Burgers",
+      "note_es": "Carne artesanal, sin atajos.",
+      "note_en": "Hand-made patties, no shortcuts.",
+      "items": [
+        { "es": "Ranchera", "en": "Ranchera", "d_es": "Pan, huevo de codorniz, carne artesanal, tocineta, jamón, queso fundido, salchicha, maíz, cebolla caramelizada, ripio de papitas, tomate, lechuga y salsas al gusto.", "d_en": "Bun, quail egg, hand-made patty, bacon, ham, melted cheese, sausage, corn, caramelized onion, crushed potato chips, tomato, lettuce and sauces to taste.", "price": 14.99, "pop": true },
+        { "es": "Paisa", "en": "Paisa", "d_es": "Pan, huevo de codorniz, carne artesanal, tocineta, jamón, queso fundido, madurito, cebolla caramelizada, ripio de papitas, tomate, lechuga y salsas al gusto.", "d_en": "Bun, quail egg, hand-made patty, bacon, ham, melted cheese, sweet plantain, caramelized onion, crushed potato chips, tomato, lettuce and sauces to taste.", "price": 13.99, "pop": false },
+        { "es": "Hawaiana de Res o de Pollo", "en": "Hawaiian — Beef or Chicken", "d_es": "Pan, huevo de codorniz, rodaja de piña caramelizada, tocineta, jamón, queso fundido, cebolla caramelizada, ripio de papitas, tomate, lechuga y salsas al gusto.", "d_en": "Bun, quail egg, caramelized pineapple ring, bacon, ham, melted cheese, caramelized onion, crushed potato chips, tomato, lettuce and sauces to taste.", "price": 13.99, "pop": false },
+        { "es": "Pecadora de Res o Pollo", "en": "Pecadora — Beef or Chicken", "d_es": "Pan, huevo de codorniz, carne artesanal o pechuga a la plancha, tocineta, jamón, queso fundido, cebolla caramelizada, ripio de papitas, tomate, lechuga y salsas al gusto.", "d_en": "Bun, quail egg, hand-made patty or grilled chicken breast, bacon, ham, melted cheese, caramelized onion, crushed potato chips, tomato, lettuce and sauces to taste.", "price": 12.99, "pop": false }
+      ]
+    },
+    {
+      "id": "salchipapas",
+      "es": "Salchipapas",
+      "en": "Salchipapas",
+      "note_es": "Papa criolla, papa a la francesa y todo lo que le quepa encima.",
+      "note_en": "Criolla potatoes, fries, and everything that fits on top.",
+      "items": [
+        { "es": "Antojito Mix", "en": "Antojito Mix", "d_es": "Papa a la francesa, salchicha, huevo de codorniz, maíz, tocineta, queso rallado y salsas al gusto.", "d_en": "French fries, sausage, quail egg, corn, bacon, shredded cheese and sauces to taste.", "price": 10.99, "pop": true },
+        { "es": "Antojito Criollo", "en": "Antojito Criollo", "d_es": "Papa criolla, salchicha, huevo de codorniz y salsas al gusto.", "d_en": "Criolla potatoes, sausage, quail egg and sauces to taste.", "price": 7.99, "pop": false },
+        { "es": "El Trío", "en": "El Trío", "d_es": "Para compartir de a tres o más. Doble papa criolla, doble papa a la francesa, salchicha, carne, pollo, chorizo, madurito, maíz y queso.", "d_en": "Built to share between three or more. Double criolla potatoes, double fries, sausage, beef, chicken, chorizo, sweet plantain, corn and cheese.", "price": 37.99, "pop": false }
+      ]
+    },
+    {
+      "id": "desgranados",
+      "es": "Desgranados",
+      "en": "Desgranados",
+      "note_es": "Todo en un solo vaso. El favorito de la casa.",
+      "note_en": "Everything in one cup. A house favourite.",
+      "items": [
+        { "es": "Desgranado Mixto", "en": "Desgranado Mixto", "d_es": "Lechuga, maíz, tocineta, salchicha, ripio de papitas, huevo de codorniz, queso rayado y salsas al gusto.", "d_en": "Lettuce, corn, bacon, sausage, crushed potato chips, quail egg, shredded cheese and sauces to taste.", "price": 14.99, "pop": true }
+      ]
+    },
+    {
+      "id": "asados",
+      "es": "De la Plancha",
+      "en": "Off the Grill",
+      "note_es": "Pregúntanos por las porciones y precios del día.",
+      "note_en": "Ask us for today's portions and prices.",
+      "items": [
+        { "es": "Costillas de Cerdo con Papita Criolla", "en": "Pork Ribs with Criolla Potatoes", "d_es": "Costilla de cerdo acompañada de papa criolla.", "d_en": "Pork ribs served with criolla potatoes.", "price": null, "pop": false },
+        { "es": "Arepas", "en": "Arepas", "d_es": "Pregúntanos por los rellenos disponibles hoy.", "d_en": "Ask about today's fillings.", "price": null, "pop": false },
+        { "es": "Maduros", "en": "Sweet Plantains", "d_es": "Maduro asado, dulce y caramelizado.", "d_en": "Grilled sweet plantain, sweet and caramelized.", "price": null, "pop": false }
+      ]
+    },
+    {
+      "id": "postres",
+      "es": "Postres",
+      "en": "Desserts",
+      "note_es": "El final feliz.",
+      "note_en": "The happy ending.",
+      "items": [
+        { "es": "Obleas", "en": "Obleas", "d_es": "Dulce de mora, arequipe, queso rayado y lecherita.", "d_en": "Blackberry jam, arequipe caramel, shredded cheese and condensed milk.", "price": 7.99, "pop": true },
+        { "es": "Merengón", "en": "Merengón", "d_es": "Guanábana, durazno, fresa y crema chantilly.", "d_en": "Soursop, peach, strawberry and chantilly cream.", "price": 9.99, "pop": false }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+/* ── Tokens ─────────────────────────────────────────────────────── */
+:root{
+  --night:#0B1026;
+  --night-2:#131A38;
+  --night-3:#1B2450;
+  --gold:#FFC803;
+  --gold-soft:#FFE075;
+  --red:#E0202E;
+  --blue:#2B58D6;
+  --cream:#FFF6E4;
+  --ink:#FFF6E4;
+  --muted:rgba(255,246,228,.62);
+  --faint:rgba(255,246,228,.13);
+  --shadow:0 18px 50px -18px rgba(0,0,0,.75);
+  --display:'Archivo Black',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --body:ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --wrap:1120px;
+  --r:18px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  background:var(--night);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* subtle grain so the flat navy doesn't read as cheap */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap{width:100%;max-width:var(--wrap);margin-inline:auto;padding-inline:20px;position:relative;z-index:1}
+h1,h2,h3{font-family:var(--display);font-weight:900;letter-spacing:-.02em;line-height:.98;margin:0;text-transform:uppercase}
+a{color:inherit}
+
+.eyebrow{
+  font-size:12px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin:0 0 14px
+}
+
+/* ── Buttons ────────────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:15px 26px;border-radius:999px;border:2px solid transparent;
+  font-weight:800;font-size:15px;letter-spacing:.01em;text-decoration:none;
+  cursor:pointer;transition:transform .18s cubic-bezier(.2,.8,.3,1),box-shadow .18s,background .18s,color .18s;
+  white-space:nowrap;font-family:var(--body);
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn--gold{background:var(--gold);color:#20160A;box-shadow:0 12px 30px -12px rgba(255,200,3,.7)}
+.btn--gold:hover{background:var(--gold-soft);box-shadow:0 18px 38px -14px rgba(255,200,3,.85)}
+.btn--ghost{border-color:var(--faint);color:var(--ink);background:rgba(255,246,228,.03)}
+.btn--ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── Header ─────────────────────────────────────────────────────── */
+header{
+  position:sticky;top:0;z-index:60;
+  background:rgba(11,16,38,.72);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;transition:border-color .3s,background .3s;
+}
+header.stuck{border-bottom-color:var(--faint);background:rgba(11,16,38,.93)}
+.nav{display:flex;align-items:center;gap:16px;padding:14px 0}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;margin-right:auto;min-width:0}
+.brand svg{width:40px;height:40px;flex:none}
+.brand b{display:block;font-family:var(--display);font-size:19px;letter-spacing:-.02em;text-transform:uppercase;white-space:nowrap;line-height:1.05}
+.brand span span{display:block;font-size:9.5px;letter-spacing:.2em;color:var(--gold);font-weight:800;text-transform:uppercase;margin-top:2px;line-height:1.2}
+
+.langtog{display:flex;border:1px solid var(--faint);border-radius:999px;overflow:hidden;flex:none}
+.langtog button{
+  background:none;border:0;color:var(--muted);font:800 12px/1 var(--body);
+  letter-spacing:.08em;padding:9px 12px;cursor:pointer;transition:.2s
+}
+.langtog button[aria-pressed="true"]{background:var(--gold);color:#20160A}
+.nav .btn{padding:11px 20px;font-size:14px}
+@media (max-width:720px){ .nav .btn--gold{display:none} }
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero{position:relative;padding:clamp(56px,10vw,112px) 0 clamp(48px,7vw,80px);overflow:hidden}
+.hero::after{
+  content:"";position:absolute;inset:-40% -20% auto;height:130%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(50% 46% at 18% 32%, rgba(224,32,46,.30), transparent 70%),
+    radial-gradient(48% 44% at 82% 20%, rgba(255,200,3,.24), transparent 70%),
+    radial-gradient(60% 50% at 50% 92%, rgba(43,88,214,.26), transparent 72%);
+  filter:blur(30px);animation:drift 22s ease-in-out infinite alternate;
+}
+@keyframes drift{ to{ transform:translate3d(-3%,2%,0) scale(1.1) } }
+
+.hero .wrap{display:grid;gap:clamp(36px,5vw,60px);grid-template-columns:1fr;align-items:center}
+@media (min-width:940px){ .hero .wrap{grid-template-columns:1.08fr .92fr} }
+
+h1{font-size:clamp(46px,10.5vw,94px)}
+h1 .line{display:block;overflow:hidden}
+h1 .line > span{display:block;animation:rise .95s cubic-bezier(.16,1,.3,1) both}
+h1 .line:nth-child(2) > span{animation-delay:.09s}
+h1 .line:nth-child(3) > span{animation-delay:.18s}
+@keyframes rise{ from{ transform:translateY(105%) } }
+.hl{color:var(--gold)}
+.hl-red{color:var(--red)}
+
+.lede{font-size:clamp(17px,2.1vw,20px);color:var(--muted);max-width:46ch;margin:22px 0 0;animation:fade .9s .34s both}
+@keyframes fade{ from{opacity:0;transform:translateY(14px)} }
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;animation:fade .9s .44s both}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:30px;font-size:14px;color:var(--muted);animation:fade .9s .54s both}
+.hero-meta b{color:var(--ink);font-weight:700}
+
+/* open / closed pill */
+.status{
+  display:inline-flex;align-items:center;gap:9px;padding:8px 16px 8px 12px;border-radius:999px;
+  border:1px solid var(--faint);background:rgba(255,246,228,.04);
+  font-size:13px;font-weight:700;margin-bottom:22px;animation:fade .8s .1s both
+}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--muted);flex:none;position:relative}
+.status.open .dot{background:#3BD671}
+.status.open .dot::after{
+  content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid #3BD671;
+  animation:pulse 2s ease-out infinite
+}
+@keyframes pulse{ to{ transform:scale(1.9); opacity:0 } }
+.status.shut .dot{background:var(--red)}
+
+/* hero art: the Ape truck */
+.art{position:relative;display:flex;align-items:center;justify-content:center;animation:fade 1s .3s both}
+.art svg{width:100%;max-width:460px;height:auto;filter:drop-shadow(0 30px 50px rgba(0,0,0,.6))}
+.art .wheel{transform-origin:center;animation:roll 3.4s linear infinite}
+@keyframes roll{ to{ transform:rotate(360deg) } }
+.steam{animation:steam 3s ease-in-out infinite}
+.steam:nth-of-type(2){animation-delay:.5s}
+.steam:nth-of-type(3){animation-delay:1s}
+@keyframes steam{ 0%{opacity:0;transform:translateY(6px)} 40%{opacity:.85} 100%{opacity:0;transform:translateY(-16px)} }
+
+/* ── Marquee ────────────────────────────────────────────────────── */
+.marquee{
+  border-block:1px solid var(--faint);background:rgba(255,200,3,.05);
+  overflow:hidden;padding:15px 0;margin-top:clamp(40px,6vw,72px)
+}
+.marquee-track{display:flex;gap:44px;width:max-content;animation:slide 34s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes slide{ to{ transform:translateX(-50%) } }
+.marquee span{
+  font-family:var(--display);font-size:15px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);display:flex;align-items:center;gap:44px;white-space:nowrap
+}
+.marquee span::after{content:"";width:6px;height:6px;border-radius:50%;background:var(--red);flex:none}
+
+/* ── Sections ───────────────────────────────────────────────────── */
+section{padding:clamp(64px,9vw,110px) 0;position:relative}
+.sec-head{max-width:56ch;margin-bottom:clamp(34px,5vw,52px)}
+.sec-head h2{font-size:clamp(32px,5.4vw,52px)}
+.sec-head p{color:var(--muted);margin:16px 0 0;font-size:17px}
+
+/* ── Category nav ───────────────────────────────────────────────── */
+.cats{
+  position:sticky;top:var(--hdr,69px);z-index:50;margin:0 -20px clamp(28px,4vw,44px);
+  padding:12px 20px;background:rgba(11,16,38,.9);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-block:1px solid var(--faint);
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch
+}
+.cats::-webkit-scrollbar{display:none}
+.cats-inner{display:flex;gap:8px;width:max-content}
+.cat{
+  border:1px solid var(--faint);background:none;color:var(--muted);
+  font:800 13px/1 var(--body);letter-spacing:.04em;text-transform:uppercase;
+  padding:11px 17px;border-radius:999px;cursor:pointer;white-space:nowrap;
+  transition:.22s cubic-bezier(.2,.8,.3,1)
+}
+.cat:hover{color:var(--ink);border-color:rgba(255,246,228,.3)}
+.cat.on{background:var(--gold);border-color:var(--gold);color:#20160A;transform:translateY(-1px)}
+
+/* ── Menu ───────────────────────────────────────────────────────── */
+.cat-block{margin-bottom:clamp(52px,7vw,84px);scroll-margin-top:150px}
+.cat-title{display:flex;align-items:baseline;gap:16px;margin-bottom:8px;flex-wrap:wrap}
+.cat-title h3{font-size:clamp(26px,4.2vw,38px);color:var(--ink)}
+.cat-title em{
+  font-style:normal;font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);opacity:.8
+}
+.cat-note{color:var(--muted);font-size:15px;margin:0 0 26px;max-width:52ch}
+
+.items{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:760px){ .items{grid-template-columns:1fr 1fr} }
+
+.item{
+  position:relative;display:flex;gap:18px;align-items:flex-start;
+  padding:22px 24px;border-radius:var(--r);
+  background:linear-gradient(180deg,rgba(255,246,228,.055),rgba(255,246,228,.022));
+  border:1px solid var(--faint);
+  opacity:0;transform:translateY(26px);
+  transition:border-color .28s,transform .28s cubic-bezier(.2,.8,.3,1),background .28s;
+  overflow:hidden
+}
+.item.in{animation:pop .62s cubic-bezier(.16,1,.3,1) forwards;animation-delay:var(--d,0ms)}
+@keyframes pop{ to{ opacity:1; transform:none } }
+.item::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--gold),var(--red));
+  transform:scaleY(0);transform-origin:top;transition:transform .34s cubic-bezier(.2,.8,.3,1)
+}
+.item:hover{border-color:rgba(255,246,228,.26);transform:translateY(-3px);background:linear-gradient(180deg,rgba(255,246,228,.085),rgba(255,246,228,.03))}
+.item:hover::before{transform:scaleY(1)}
+
+.item-body{flex:1;min-width:0}
+.item h4{
+  margin:0 0 7px;font-family:var(--display);font-size:17px;letter-spacing:-.01em;
+  text-transform:uppercase;display:flex;align-items:center;gap:9px;flex-wrap:wrap;line-height:1.15
+}
+.item p{margin:0;font-size:14.5px;color:var(--muted);line-height:1.55}
+.badge{
+  font-family:var(--body);font-size:9.5px;font-weight:900;letter-spacing:.14em;
+  background:var(--red);color:#fff;padding:4px 8px;border-radius:5px;flex:none;text-transform:uppercase
+}
+.price{
+  font-family:var(--display);font-size:20px;color:var(--gold);flex:none;
+  letter-spacing:-.02em;padding-top:1px
+}
+.price.ask{font-size:11px;letter-spacing:.13em;color:var(--muted);padding-top:6px;text-transform:uppercase}
+
+.menu-foot{
+  margin-top:8px;padding:20px 24px;border:1px dashed var(--faint);border-radius:var(--r);
+  font-size:13.5px;color:var(--muted)
+}
+
+/* ── Order strip ────────────────────────────────────────────────── */
+.order{background:linear-gradient(160deg,var(--night-2),var(--night-3))}
+.order-grid{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:700px){ .order-grid{grid-template-columns:repeat(3,1fr)} }
+.ocard{
+  display:flex;flex-direction:column;gap:8px;padding:26px;border-radius:var(--r);
+  background:rgba(11,16,38,.5);border:1px solid var(--faint);text-decoration:none;
+  transition:.24s cubic-bezier(.2,.8,.3,1)
+}
+.ocard:hover{transform:translateY(-4px);border-color:var(--gold);background:rgba(11,16,38,.75)}
+.ocard b{font-family:var(--display);font-size:17px;text-transform:uppercase}
+.ocard small{color:var(--muted);font-size:13.5px}
+.ocard .go{color:var(--gold);font-weight:800;font-size:13px;margin-top:6px}
+
+/* ── Visit ──────────────────────────────────────────────────────── */
+.visit-grid{display:grid;gap:clamp(28px,4vw,52px);grid-template-columns:1fr}
+@media (min-width:860px){ .visit-grid{grid-template-columns:1fr 1fr} }
+.hours{list-style:none;margin:0;padding:0;border-top:1px solid var(--faint)}
+.hours li{
+  display:flex;justify-content:space-between;gap:20px;padding:14px 2px;
+  border-bottom:1px solid var(--faint);font-size:15px
+}
+.hours li.now{color:var(--gold);font-weight:800}
+.hours li.now::after{content:"HOY";font-size:9px;letter-spacing:.16em;align-self:center;opacity:.75}
+.hours span:last-child{color:var(--muted)}
+.hours li.now span:last-child{color:var(--gold)}
+.info-card{
+  padding:30px;border-radius:var(--r);background:rgba(255,246,228,.04);
+  border:1px solid var(--faint);align-self:start
+}
+.info-card h3{font-size:20px;margin-bottom:18px}
+.info-row{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid var(--faint);font-size:15px}
+.info-row:last-of-type{border-bottom:0}
+.info-row svg{width:19px;height:19px;flex:none;color:var(--gold);margin-top:2px}
+.info-row a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--faint)}
+.info-row a:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer{border-top:1px solid var(--faint);padding:52px 0 130px;font-size:14px;color:var(--muted)}
+.foot-top{display:flex;flex-wrap:wrap;gap:26px;align-items:center;justify-content:space-between;margin-bottom:30px}
+.socials{display:flex;gap:10px}
+.socials a{
+  width:42px;height:42px;border-radius:50%;border:1px solid var(--faint);
+  display:grid;place-items:center;color:var(--ink);transition:.22s
+}
+.socials a:hover{background:var(--gold);border-color:var(--gold);color:#20160A;transform:translateY(-3px)}
+.socials svg{width:19px;height:19px}
+.foot-note{border-top:1px solid var(--faint);padding-top:22px;font-size:12.5px;line-height:1.7;opacity:.75}
+
+/* ── Mobile order bar ───────────────────────────────────────────── */
+.bar{
+  position:fixed;left:12px;right:12px;bottom:12px;z-index:70;
+  display:flex;gap:9px;padding:9px;border-radius:999px;
+  background:rgba(19,26,56,.93);border:1px solid var(--faint);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:var(--shadow);
+  transform:translateY(140%);transition:transform .4s cubic-bezier(.2,.8,.3,1)
+}
+.bar.up{transform:none}
+.bar a{flex:1;padding:13px 12px;font-size:14px}
+@media (min-width:900px){ .bar{display:none} }
+@media (max-width:899px){ footer{padding-bottom:130px} }
+
+/* ── Reveal + reduced motion ────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(28px)}
+.rv.in{animation:pop .72s cubic-bezier(.16,1,.3,1) forwards}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .item,.rv,h1 .line>span,.lede,.hero-cta,.hero-meta,.art,.status{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+
+<body>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M12 42h40" stroke="#FFC803" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+        <path d="M16 42V27c0-4 3-7 7-7h9l8 10h6c3 0 5 2 5 5v7" fill="none" stroke="#FFC803" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="22" cy="48" r="5.5" fill="#E0202E"/>
+        <circle cx="45" cy="48" r="5.5" fill="#E0202E"/>
+      </svg>
+      <span style="min-width:0">
+        <b>Apecar</b>
+        <span data-i18n="tagShort">Comida rápida colombiana</span>
+      </span>
+    </a>
+    <div class="langtog" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="es" aria-pressed="true">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn btn--gold" href="https://wa.me/15613775311" target="_blank" rel="noopener" data-i18n="navOrder">Pedir ahora</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ══ HERO ══ -->
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <div class="status" id="status">
+          <span class="dot"></span>
+          <span id="statusText">—</span>
+        </div>
+
+        <h1>
+          <span class="line"><span data-i18n="h1a">Vale</span></span>
+          <span class="line"><span data-i18n="h1b">la pena</span></span>
+          <span class="line"><span class="hl" data-i18n="h1c">pecar.</span></span>
+        </h1>
+
+        <p class="lede" data-i18n="lede">
+          Comida rápida colombiana de verdad, hecha en West Palm Beach.
+          Perros cargados, hamburguesas artesanales, salchipapas y desgranados —
+          como en la esquina de la casa, pero en la Military Trail.
+        </p>
+
+        <div class="hero-cta">
+          <a class="btn btn--gold" href="https://wa.me/15613775311" target="_blank" rel="noopener" data-i18n="ctaWa">
+            Pedir por WhatsApp
+          </a>
+          <a class="btn btn--ghost" href="#menu" data-i18n="ctaMenu">Ver el menú</a>
+        </div>
+
+        <div class="hero-meta">
+          <span><b>638</b> S Military Trail, WPB</span>
+          <span><b data-i18n="metaRate">4.8</b> ★ <span data-i18n="metaRateLbl">en apps de domicilio</span></span>
+          <span><b>(561)</b> 377-5311</span>
+        </div>
+      </div>
+
+      <!-- The Ape three-wheeler the name comes from -->
+      <div class="art" aria-hidden="true">
+        <svg viewBox="0 0 400 300" fill="none">
+          <ellipse cx="200" cy="256" rx="150" ry="15" fill="#000" opacity=".35"/>
+          <g class="steam" stroke="#FFF6E4" stroke-width="4" stroke-linecap="round" opacity=".5">
+            <path d="M150 74c0-9 9-9 9-18s-9-9-9-18"/>
+          </g>
+          <g class="steam" stroke="#FFF6E4" stroke-width="4" stroke-linecap="round" opacity=".5">
+            <path d="M176 66c0-9 9-9 9-18s-9-9-9-18"/>
+          </g>
+          <g class="steam" stroke="#FFF6E4" stroke-width="4" stroke-linecap="round" opacity=".5">
+            <path d="M202 74c0-9 9-9 9-18s-9-9-9-18"/>
+          </g>
+
+          <!-- cargo box -->
+          <rect x="132" y="96" width="196" height="112" rx="16" fill="#E0202E"/>
+          <rect x="132" y="96" width="196" height="112" rx="16" stroke="#0B1026" stroke-width="7"/>
+          <rect x="150" y="118" width="160" height="46" rx="9" fill="#FFC803"/>
+          <rect x="150" y="176" width="86" height="12" rx="6" fill="#0B1026" opacity=".28"/>
+
+          <!-- cab -->
+          <path d="M132 208V126c0-24 19-43 43-43h6c8 0 15 4 19 11l17 29" fill="#FFC803" stroke="#0B1026" stroke-width="7" stroke-linejoin="round"/>
+          <path d="M150 128c0-14 11-25 25-25h5l17 29h-47z" fill="#2B58D6" stroke="#0B1026" stroke-width="6" stroke-linejoin="round"/>
+
+          <!-- chassis -->
+          <rect x="120" y="200" width="216" height="16" rx="8" fill="#0B1026"/>
+
+          <!-- wheels -->
+          <g class="wheel" style="transform-box:fill-box;transform-origin:center">
+            <circle cx="163" cy="226" r="30" fill="#161E42" stroke="#FFF6E4" stroke-width="4"/>
+            <circle cx="163" cy="226" r="14" fill="#FFC803"/>
+            <path d="M163 214v-6M163 244v-6M151 226h-6M181 226h-6" stroke="#FFF6E4" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="163" cy="226" r="4.5" fill="#0B1026"/>
+          </g>
+          <g class="wheel" style="transform-box:fill-box;transform-origin:center">
+            <circle cx="296" cy="226" r="30" fill="#161E42" stroke="#FFF6E4" stroke-width="4"/>
+            <circle cx="296" cy="226" r="14" fill="#FFC803"/>
+            <path d="M296 214v-6M296 244v-6M284 226h-6M314 226h-6" stroke="#FFF6E4" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="296" cy="226" r="4.5" fill="#0B1026"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="mq"></div>
+  </div>
+
+  <!-- ══ MENU ══ -->
+  <section id="menu">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow" data-i18n="menuEyebrow">El menú</p>
+        <h2 data-i18n="menuTitle">Todo lo que se antoja</h2>
+        <p data-i18n="menuSub">Recetas colombianas de calle, hechas al momento. Todo lleva salsas al gusto — pide como te gusta.</p>
+      </div>
+
+      <nav class="cats" aria-label="Categorías"><div class="cats-inner" id="cats"></div></nav>
+
+      <div id="menuRoot"></div>
+
+      <p class="menu-foot" data-i18n="menuFoot">
+        Los precios mostrados vienen de las apps de domicilio y pueden variar en el local.
+        Confirma disponibilidad y precio del día por WhatsApp al (561) 377-5311.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ ORDER ══ -->
+  <section class="order">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow" data-i18n="orderEyebrow">Pide ya</p>
+        <h2 data-i18n="orderTitle">Como te quede fácil</h2>
+        <p data-i18n="orderSub">Llama y recoge, o pide a domicilio por tu app favorita.</p>
+      </div>
+      <div class="order-grid">
+        <a class="ocard rv" href="https://wa.me/15613775311" target="_blank" rel="noopener">
+          <b data-i18n="o1t">WhatsApp</b>
+          <small data-i18n="o1s">Anticipa tu orden y recógela sin fila. La forma más rápida.</small>
+          <span class="go" data-i18n="o1g">(561) 377-5311 →</span>
+        </a>
+        <a class="ocard rv" href="https://www.ubereats.com/store/apecar-fast-food/eeSflLvoRwGiT6bCUrexGA" target="_blank" rel="noopener">
+          <b>Uber Eats</b>
+          <small data-i18n="o2s">Domicilio en West Palm Beach. 4.8 ★ de los clientes.</small>
+          <span class="go" data-i18n="o2g">Pedir en Uber Eats →</span>
+        </a>
+        <a class="ocard rv" href="https://www.doordash.com/en-US/store/apecar-fast-food-west-palm-beach-27606846/" target="_blank" rel="noopener">
+          <b>DoorDash</b>
+          <small data-i18n="o3s">También disponible en Postmates.</small>
+          <span class="go" data-i18n="o3g">Pedir en DoorDash →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VISIT ══ -->
+  <section id="visit">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow" data-i18n="visitEyebrow">Visítanos</p>
+        <h2 data-i18n="visitTitle">Nos vemos en la Military</h2>
+      </div>
+      <div class="visit-grid">
+        <div class="rv">
+          <ul class="hours" id="hours"></ul>
+        </div>
+        <div class="info-card rv">
+          <h3 data-i18n="infoTitle">Contacto</h3>
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.3-7-11a7 7 0 1 1 14 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+            <a href="https://maps.google.com/?q=638+S+Military+Trail,+West+Palm+Beach,+FL+33415" target="_blank" rel="noopener">638 S Military Trail<br>West Palm Beach, FL 33415</a>
+          </div>
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+            <a href="tel:+15613775311">(561) 377-5311</a>
+          </div>
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/></svg>
+            <span data-i18n="infoDays">Martes a domingo · Cerrado los lunes</span>
+          </div>
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            <span data-i18n="infoLate" >Cocina abierta hasta las 11:00 PM</span>
+          </div>
+          <div style="margin-top:22px">
+            <a class="btn btn--gold" style="width:100%" href="https://maps.google.com/?q=638+S+Military+Trail,+West+Palm+Beach,+FL+33415" target="_blank" rel="noopener" data-i18n="ctaMap">Cómo llegar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <a class="brand" href="#top">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M12 42h40" stroke="#FFC803" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+          <path d="M16 42V27c0-4 3-7 7-7h9l8 10h6c3 0 5 2 5 5v7" fill="none" stroke="#FFC803" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="22" cy="48" r="5.5" fill="#E0202E"/><circle cx="45" cy="48" r="5.5" fill="#E0202E"/>
+        </svg>
+        <span><b>Apecar</b><span data-i18n="tagShort">Comida rápida colombiana</span></span>
+      </a>
+      <div class="socials">
+        <a href="https://www.instagram.com/apecarfastfood/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@apecarfastfood" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.3 2.3 1.7 3.8 4 4v2.9c-1.4.1-2.7-.3-4-1v6.3c0 3.6-2.6 5.8-5.6 5.8-3 0-5.4-2.3-5.4-5.4 0-3.2 2.7-5.6 6.1-5.2v3a2.6 2.6 0 1 0 1.9 2.5V3h3z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/apecar.fastfood/" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg>
+        </a>
+      </div>
+    </div>
+    <p class="foot-note" data-i18n="footNote">
+      Apecar Fast Food · 638 S Military Trail, West Palm Beach, FL 33415 · (561) 377-5311<br>
+      Precios y horarios sujetos a cambio. Confírmalos por WhatsApp antes de tu visita.
+    </p>
+  </div>
+</footer>
+
+<div class="bar" id="bar">
+  <a class="btn btn--gold" href="https://wa.me/15613775311" target="_blank" rel="noopener" data-i18n="barWa">WhatsApp</a>
+  <a class="btn btn--ghost" href="#menu" data-i18n="barMenu">Menú</a>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ── i18n ─────────────────────────────────────────────────────── */
+  var T = {
+    es:{
+      tagShort:"Comida rápida colombiana", navOrder:"Pedir ahora",
+      h1a:"Vale", h1b:"la pena", h1c:"pecar.",
+      lede:"Comida rápida colombiana de verdad, hecha en West Palm Beach. Perros cargados, hamburguesas artesanales, salchipapas y desgranados — como en la esquina de la casa, pero en la Military Trail.",
+      ctaWa:"Pedir por WhatsApp", ctaMenu:"Ver el menú",
+      metaRate:"4.8", metaRateLbl:"en apps de domicilio",
+      menuEyebrow:"El menú", menuTitle:"Todo lo que se antoja",
+      menuSub:"Recetas colombianas de calle, hechas al momento. Todo lleva salsas al gusto — pide como te gusta.",
+      menuFoot:"Los precios mostrados vienen de las apps de domicilio y pueden variar en el local. Confirma disponibilidad y precio del día por WhatsApp al (561) 377-5311.",
+      orderEyebrow:"Pide ya", orderTitle:"Como te quede fácil",
+      orderSub:"Llama y recoge, o pide a domicilio por tu app favorita.",
+      o1t:"WhatsApp", o1s:"Anticipa tu orden y recógela sin fila. La forma más rápida.", o1g:"(561) 377-5311 →",
+      o2s:"Domicilio en West Palm Beach. 4.8 ★ de los clientes.", o2g:"Pedir en Uber Eats →",
+      o3s:"También disponible en Postmates.", o3g:"Pedir en DoorDash →",
+      visitEyebrow:"Visítanos", visitTitle:"Nos vemos en la Military",
+      infoTitle:"Contacto", infoDays:"Martes a domingo · Cerrado los lunes",
+      infoLate:"Cocina abierta hasta las 11:00 PM", ctaMap:"Cómo llegar",
+      barWa:"WhatsApp", barMenu:"Menú",
+      footNote:"Apecar Fast Food · 638 S Military Trail, West Palm Beach, FL 33415 · (561) 377-5311<br>Precios y horarios sujetos a cambio. Confírmalos por WhatsApp antes de tu visita.",
+      open:"Abierto ahora · hasta las {c}", shut:"Cerrado · abrimos {d} a las {o}",
+      ask:"Consultar", fav:"Favorito", today:"HOY",
+      days:["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],
+      closed:"Cerrado"
+    },
+    en:{
+      tagShort:"Colombian street food", navOrder:"Order now",
+      h1a:"Worth", h1b:"every", h1c:"sin.",
+      lede:"Real Colombian street food, made in West Palm Beach. Loaded hot dogs, hand-made burgers, salchipapas and desgranados — like the corner stand back home, but on Military Trail.",
+      ctaWa:"Order on WhatsApp", ctaMenu:"See the menu",
+      metaRate:"4.8", metaRateLbl:"on delivery apps",
+      menuEyebrow:"The menu", menuTitle:"Everything you're craving",
+      menuSub:"Colombian street recipes, made to order. Everything comes with sauces to taste — order it your way.",
+      menuFoot:"Prices shown come from the delivery apps and may differ in store. Confirm today's availability and pricing on WhatsApp at (561) 377-5311.",
+      orderEyebrow:"Order now", orderTitle:"Whatever's easiest",
+      orderSub:"Call ahead and pick up, or get it delivered through your favourite app.",
+      o1t:"WhatsApp", o1s:"Order ahead and skip the wait. The fastest way.", o1g:"(561) 377-5311 →",
+      o2s:"Delivery across West Palm Beach. Rated 4.8 ★ by customers.", o2g:"Order on Uber Eats →",
+      o3s:"Also available on Postmates.", o3g:"Order on DoorDash →",
+      visitEyebrow:"Visit us", visitTitle:"Find us on Military Trail",
+      infoTitle:"Contact", infoDays:"Tuesday to Sunday · Closed Mondays",
+      infoLate:"Kitchen open until 11:00 PM", ctaMap:"Get directions",
+      barWa:"WhatsApp", barMenu:"Menu",
+      footNote:"Apecar Fast Food · 638 S Military Trail, West Palm Beach, FL 33415 · (561) 377-5311<br>Prices and hours subject to change. Please confirm on WhatsApp before visiting.",
+      open:"Open now · until {c}", shut:"Closed · we open {d} at {o}",
+      ask:"Ask us", fav:"Favourite", today:"TODAY",
+      days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      closed:"Closed"
+    }
+  };
+
+  /* ── Hours (24h, America/New_York). null = closed. ─────────────── */
+  /* Index 0 = Sunday. Edit here to change opening times site-wide.  */
+  var HOURS = [
+    { open:13, close:23 }, // Sun
+    null,                  // Mon — closed
+    { open:16, close:23 }, // Tue
+    { open:16, close:23 }, // Wed
+    { open:16, close:23 }, // Thu
+    { open:16, close:23 }, // Fri
+    { open:13, close:23 }  // Sat
+  ];
+
+  var lang = 'es';
+  try{ var s = localStorage.getItem('apecar-lang'); if(s === 'en' || s === 'es') lang = s; }catch(e){}
+
+  var MENU = JSON.parse(document.getElementById('menu-data').textContent);
+  var $  = function(s,c){ return (c||document).querySelector(s); };
+  var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
+
+  function money(n){ return '$' + n.toFixed(2); }
+  function hr(h){
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    var v = h % 12; if(v === 0) v = 12;
+    return v + ':00 ' + ampm;
+  }
+
+  /* Current time in the restaurant's timezone, regardless of visitor. */
+  function nowET(){
+    try{
+      var p = new Intl.DateTimeFormat('en-US',{
+        timeZone:'America/New_York', hour:'numeric', minute:'numeric',
+        weekday:'short', hour12:false
+      }).formatToParts(new Date());
+      var g = {}; p.forEach(function(x){ g[x.type] = x.value; });
+      var map = { Sun:0, Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6 };
+      return { day: map[g.weekday], h: parseInt(g.hour,10) % 24, m: parseInt(g.minute,10) };
+    }catch(e){
+      var d = new Date();
+      return { day:d.getDay(), h:d.getHours(), m:d.getMinutes() };
+    }
+  }
+
+  /* ── Render menu ──────────────────────────────────────────────── */
+  function renderMenu(){
+    var t = T[lang];
+    var root = $('#menuRoot'), cats = $('#cats');
+    root.innerHTML = ''; cats.innerHTML = '';
+
+    MENU.categories.forEach(function(cat, ci){
+      var btn = document.createElement('button');
+      btn.className = 'cat' + (ci === 0 ? ' on' : '');
+      btn.type = 'button';
+      btn.textContent = cat[lang];
+      btn.setAttribute('data-target', cat.id);
+      cats.appendChild(btn);
+
+      var block = document.createElement('div');
+      block.className = 'cat-block';
+      block.id = cat.id;
+
+      var head = document.createElement('div');
+      head.className = 'cat-title';
+      var h3 = document.createElement('h3'); h3.textContent = cat[lang];
+      var em = document.createElement('em'); em.textContent = lang === 'es' ? cat.en : cat.es;
+      head.appendChild(h3);
+      if(cat.en !== cat.es) head.appendChild(em);
+      block.appendChild(head);
+
+      var note = document.createElement('p');
+      note.className = 'cat-note';
+      note.textContent = cat[lang === 'es' ? 'note_es' : 'note_en'] || '';
+      block.appendChild(note);
+
+      var grid = document.createElement('div');
+      grid.className = 'items';
+
+      cat.items.forEach(function(it, i){
+        var el = document.createElement('article');
+        el.className = 'item';
+        el.style.setProperty('--d', (i % 6) * 65 + 'ms');
+
+        var body = document.createElement('div');
+        body.className = 'item-body';
+
+        var h4 = document.createElement('h4');
+        h4.appendChild(document.createTextNode(it[lang]));
+        if(it.pop){
+          var b = document.createElement('span');
+          b.className = 'badge'; b.textContent = t.fav;
+          h4.appendChild(b);
+        }
+        var p = document.createElement('p');
+        p.textContent = it[lang === 'es' ? 'd_es' : 'd_en'] || '';
+
+        body.appendChild(h4); body.appendChild(p);
+
+        var price = document.createElement('div');
+        if(it.price === null || it.price === undefined){
+          price.className = 'price ask'; price.textContent = t.ask;
+        }else{
+          price.className = 'price'; price.textContent = money(it.price);
+        }
+
+        el.appendChild(body); el.appendChild(price);
+        grid.appendChild(el);
+      });
+
+      block.appendChild(grid);
+      root.appendChild(block);
+    });
+
+    observeItems();
+    wireCats();
+  }
+
+  /* ── Scroll reveal ────────────────────────────────────────────── */
+  var io = null;
+  function observeItems(){
+    if(!('IntersectionObserver' in window)){
+      $$('.item, .rv').forEach(function(n){ n.classList.add('in'); });
+      return;
+    }
+    if(io) io.disconnect();
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:.08 });
+    $$('.item, .rv').forEach(function(n){ io.observe(n); });
+  }
+
+  /* ── Category nav: click to scroll, scroll to highlight ────────── */
+  function wireCats(){
+    var buttons = $$('.cat');
+    buttons.forEach(function(b){
+      b.addEventListener('click', function(){
+        var el = document.getElementById(b.getAttribute('data-target'));
+        if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+      });
+    });
+
+    if(!('IntersectionObserver' in window)) return;
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        buttons.forEach(function(b){
+          var on = b.getAttribute('data-target') === en.target.id;
+          b.classList.toggle('on', on);
+          if(on && b.parentNode.parentNode.scrollWidth > b.parentNode.parentNode.clientWidth){
+            b.parentNode.parentNode.scrollTo({ left: b.offsetLeft - 20, behavior:'smooth' });
+          }
+        });
+      });
+    }, { rootMargin:'-140px 0px -70% 0px' });
+    $$('.cat-block').forEach(function(n){ spy.observe(n); });
+  }
+
+  /* ── Hours list + open/closed pill ────────────────────────────── */
+  function renderHours(){
+    var t = T[lang], n = nowET(), ul = $('#hours');
+    ul.innerHTML = '';
+    var order = [1,2,3,4,5,6,0]; // Mon → Sun
+
+    order.forEach(function(d){
+      var li = document.createElement('li');
+      if(d === n.day) li.className = 'now';
+      var a = document.createElement('span'); a.textContent = t.days[d];
+      var b = document.createElement('span');
+      b.textContent = HOURS[d] ? (hr(HOURS[d].open) + ' – ' + hr(HOURS[d].close)) : t.closed;
+      li.appendChild(a); li.appendChild(b);
+      ul.appendChild(li);
+    });
+
+    var pill = $('#status'), txt = $('#statusText');
+    var todayH = HOURS[n.day];
+    var isOpen = !!todayH && n.h >= todayH.open && n.h < todayH.close;
+
+    if(isOpen){
+      pill.className = 'status open';
+      txt.textContent = t.open.replace('{c}', hr(todayH.close));
+    }else{
+      pill.className = 'status shut';
+      // find the next day that has hours
+      var i = 0, d = n.day, nx = null;
+      // later today?
+      if(todayH && n.h < todayH.open){ nx = { d:d, o:todayH.open }; }
+      while(!nx && i < 8){ i++; d = (d + 1) % 7; if(HOURS[d]) nx = { d:d, o:HOURS[d].open }; }
+      txt.textContent = nx
+        ? t.shut.replace('{d}', t.days[nx.d].toLowerCase()).replace('{o}', hr(nx.o))
+        : t.closed;
+    }
+  }
+
+  /* ── Marquee ──────────────────────────────────────────────────── */
+  function renderMarquee(){
+    var words = lang === 'es'
+      ? ['Perros cargados','Salchipapas','Desgranados','Hamburguesas artesanales','Obleas','Empanadas','Papa criolla','Arequipe']
+      : ['Loaded hot dogs','Salchipapas','Desgranados','Hand-made burgers','Obleas','Empanadas','Criolla potatoes','Arequipe'];
+    var run = words.concat(words); // duplicated for a seamless -50% loop
+    var mq = $('#mq');
+    mq.innerHTML = '';
+    run.forEach(function(w){
+      var s = document.createElement('span'); s.textContent = w; mq.appendChild(s);
+    });
+  }
+
+  /* ── Static strings ───────────────────────────────────────────── */
+  function applyStrings(){
+    var t = T[lang];
+    $$('[data-i18n]').forEach(function(n){
+      var k = n.getAttribute('data-i18n');
+      if(!(k in t)) return;
+      if(k === 'footNote') n.innerHTML = t[k]; else n.textContent = t[k];
+    });
+    document.documentElement.lang = lang;
+  }
+
+  function setLang(next){
+    lang = next;
+    try{ localStorage.setItem('apecar-lang', lang); }catch(e){}
+    $$('.langtog button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang));
+    });
+    applyStrings(); renderMenu(); renderHours(); renderMarquee();
+    syncHeaderOffset(); // menu re-render replaces the blocks, so re-apply
+  }
+
+  $$('.langtog button').forEach(function(b){
+    b.addEventListener('click', function(){ setLang(b.getAttribute('data-lang')); });
+  });
+
+  /* ── Header shadow + mobile order bar ─────────────────────────── */
+  var hdr = $('#hdr'), bar = $('#bar');
+
+  /* The category bar sticks directly under the header, whose height
+     changes with viewport width — measure it instead of guessing. */
+  function syncHeaderOffset(){
+    document.documentElement.style.setProperty('--hdr', hdr.offsetHeight + 'px');
+    $$('.cat-block').forEach(function(n){
+      n.style.scrollMarginTop = (hdr.offsetHeight + 78) + 'px';
+    });
+  }
+  window.addEventListener('resize', syncHeaderOffset);
+
+  window.addEventListener('scroll', function(){
+    var y = window.pageYOffset;
+    hdr.classList.toggle('stuck', y > 8);
+    bar.classList.toggle('up', y > 420 && y < document.body.scrollHeight - window.innerHeight - 180);
+  }, { passive:true });
+
+  /* ── Go ───────────────────────────────────────────────────────── */
+  setLang(lang);
+  observeItems();
+  setInterval(renderHours, 60000); // keep open/closed honest as the evening rolls on
+})();
+</script>
+</body>
+</html>
