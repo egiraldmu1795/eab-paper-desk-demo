@@ -1,6 +1,6 @@
-# Apecar Fast Food — website
+# A Pecar Fast Food — website
 
-Website for **Apecar Fast Food**, Colombian street food at 638 S Military Trail,
+Website for **A Pecar Fast Food**, Colombian street food at 638 S Military Trail,
 West Palm Beach, FL 33415.
 
 The whole site is one file: **`index.html`**. No build step, no dependencies, no
@@ -89,7 +89,7 @@ The site deliberately ships with zero food photography. When you have real
 photos of the food, they belong in a `photos/` folder next to `index.html`, and
 the natural place for them is a strip above the menu section.
 
-Please use actual photos of Apecar's food. AI-generated or stock food images on
+Please use actual photos of A Pecar's food. AI-generated or stock food images on
 a restaurant site misrepresent what a customer will actually be handed, and
 they're the fastest way to earn a bad first review.
 
@@ -103,9 +103,20 @@ contains `index.html`.
 
 ## Where the content came from
 
-Menu items, descriptions and prices were transcribed from Apecar's public
-listings on Uber Eats and Postmates. Address, phone and hours are from the
-Restaurantji and AllMyLinks listings.
+Menu items, descriptions and prices were transcribed from the restaurant's
+public listings on Uber Eats and Postmates. Address, phone and hours are from
+the Restaurantji and AllMyLinks listings.
+
+**A note on the name.** The site displays **A Pecar Fast Food** — the
+incorporated name, and the one that makes the pun land (*a pecar* = "to sin",
+which the menu already plays on with Pecador, Pecadora, La Perra, La Loba).
+Every existing listing and social handle uses the closed-up spelling *Apecar*:
+`@apecarfastfood` on Instagram, TikTok and Facebook, and "Apecar Fast Food" on
+Uber Eats, DoorDash and Google. Those are left untouched — renaming them would
+cost the 4.8★ review history. The site carries both: `A Pecar Fast Food` as the
+display name, with `Apecar Fast Food`, `Apecar Fastfood` and `Apecar` listed as
+`alternateName` in the Schema.org block, so a search for either spelling still
+resolves here.
 
 Two things worth confirming with the restaurant before this goes live:
 
