@@ -85,9 +85,20 @@ section.
 
 ## Adding real photos
 
-The site deliberately ships with zero food photography. When you have real
-photos of the food, they belong in a `photos/` folder next to `index.html`, and
-the natural place for them is a strip above the menu section.
+The gallery is built and waiting — it just has nothing to show yet. Drop image
+files into `photos/` and list them in the `photos` array at the top of
+`index.html`:
+
+```json
+"photos": [
+  { "file": "perro-paisa.jpg", "es": "Perro Paisa", "en": "Paisa Hot Dog" }
+]
+```
+
+While that array is empty the entire gallery section stays hidden, so the site
+looks finished with no photos at all and better the moment there are some. A
+filename that doesn't resolve is dropped silently instead of leaving a broken
+image on the page. See `photos/README.md` for shooting and sizing notes.
 
 Please use actual photos of A Pecar's food. AI-generated or stock food images on
 a restaurant site misrepresent what a customer will actually be handed, and

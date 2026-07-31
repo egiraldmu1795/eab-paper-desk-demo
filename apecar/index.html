@@ -44,11 +44,21 @@
   menu. Add, remove or reprice items here and the whole site updates.
   Each item: es (Spanish name), en (English name), d_es / d_en
   (descriptions), price (number, or null to show "Consultar"),
-  pop (true = shows the FAVORITO badge).
+  pop (true = shows the FAVORITO badge), img (optional photo filename).
+
+  PHOTOS — drop image files into the photos/ folder next to this file,
+  then list them below. The gallery section hides itself completely
+  while "photos" is empty, so the site looks finished either way.
+    "photos": [
+      { "file": "perro-paisa.jpg", "es": "Perro Paisa", "en": "Paisa Hot Dog" }
+    ]
+  To put a photo on a menu card, add "img" to that item:
+    { "es": "Paisa", ..., "img": "perro-paisa.jpg" }
   ═══════════════════════════════════════════════════════════════════
 -->
 <script type="application/json" id="menu-data">
 {
+  "photos": [],
   "categories": [
     {
       "id": "entraditas",
@@ -385,6 +395,40 @@ section{padding:clamp(64px,9vw,110px) 0;position:relative}
   font-size:13.5px;color:var(--muted)
 }
 
+/* ── Item thumbnail (optional per item) ─────────────────────────── */
+.thumb{
+  width:78px;height:78px;flex:none;border-radius:12px;overflow:hidden;
+  background:rgba(255,246,228,.06);border:1px solid var(--faint)
+}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:520px){ .thumb{width:62px;height:62px} }
+
+/* ── Photo gallery (hidden entirely when no photos) ─────────────── */
+#gallery[hidden]{display:none}
+/* Fixed column counts rather than auto-fit: tiles stay even and fill the
+   row for any number of photos, instead of stranding a ragged tail. */
+.shots{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
+@media (min-width:640px){ .shots{grid-template-columns:repeat(3,1fr)} }
+@media (min-width:960px){ .shots{grid-template-columns:repeat(4,1fr);gap:14px} }
+.shot{
+  position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/5;
+  background:rgba(255,246,228,.05);border:1px solid var(--faint);
+  transition:transform .3s cubic-bezier(.2,.8,.3,1),border-color .3s
+}
+.shot:hover{transform:translateY(-4px);border-color:var(--gold)}
+.shot img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .5s cubic-bezier(.2,.8,.3,1)
+}
+.shot:hover img{transform:scale(1.06)}
+.shot figcaption{
+  position:absolute;left:0;right:0;bottom:0;padding:30px 14px 13px;
+  font-family:var(--display);font-size:13px;line-height:1.2;
+  text-transform:uppercase;letter-spacing:-.01em;
+  background:linear-gradient(to top,rgba(11,16,38,.94),rgba(11,16,38,.6) 55%,transparent);
+  color:var(--ink)
+}
+
 /* ── Order strip ────────────────────────────────────────────────── */
 .order{background:linear-gradient(160deg,var(--night-2),var(--night-3))}
 .order-grid{display:grid;gap:14px;grid-template-columns:1fr}
@@ -589,6 +633,18 @@ footer{border-top:1px solid var(--faint);padding:52px 0 130px;font-size:14px;col
     </div>
   </section>
 
+  <!-- ══ GALLERY — stays hidden until photos are listed in menu-data ══ -->
+  <section id="gallery" hidden>
+    <div class="wrap">
+      <div class="sec-head rv">
+        <p class="eyebrow" data-i18n="galEyebrow">La comida</p>
+        <h2 data-i18n="galTitle">Así se ve</h2>
+        <p data-i18n="galSub">Fotos reales de lo que sale de la cocina.</p>
+      </div>
+      <div class="shots" id="shots"></div>
+    </div>
+  </section>
+
   <!-- ══ ORDER ══ -->
   <section class="order">
     <div class="wrap">
@@ -705,6 +761,7 @@ footer{border-top:1px solid var(--faint);padding:52px 0 130px;font-size:14px;col
       menuEyebrow:"El menú", menuTitle:"Todo lo que se antoja",
       menuSub:"Recetas colombianas de calle, hechas al momento. Todo lleva salsas al gusto — pide como te gusta.",
       menuFoot:"Los precios mostrados vienen de las apps de domicilio y pueden variar en el local. Confirma disponibilidad y precio del día por WhatsApp al (561) 377-5311.",
+      galEyebrow:"La comida", galTitle:"Así se ve", galSub:"Fotos reales de lo que sale de la cocina.",
       orderEyebrow:"Pide ya", orderTitle:"Como te quede fácil",
       orderSub:"Llama y recoge, o pide a domicilio por tu app favorita.",
       o1t:"WhatsApp", o1s:"Anticipa tu orden y recógela sin fila. La forma más rápida.", o1g:"(561) 377-5311 →",
@@ -729,6 +786,7 @@ footer{border-top:1px solid var(--faint);padding:52px 0 130px;font-size:14px;col
       menuEyebrow:"The menu", menuTitle:"Everything you're craving",
       menuSub:"Colombian street recipes, made to order. Everything comes with sauces to taste — order it your way.",
       menuFoot:"Prices shown come from the delivery apps and may differ in store. Confirm today's availability and pricing on WhatsApp at (561) 377-5311.",
+      galEyebrow:"The food", galTitle:"How it looks", galSub:"Real photos of what comes out of the kitchen.",
       orderEyebrow:"Order now", orderTitle:"Whatever's easiest",
       orderSub:"Call ahead and pick up, or get it delivered through your favourite app.",
       o1t:"WhatsApp", o1s:"Order ahead and skip the wait. The fastest way.", o1g:"(561) 377-5311 →",
@@ -826,6 +884,20 @@ footer{border-top:1px solid var(--faint);padding:52px 0 130px;font-size:14px;col
         var el = document.createElement('article');
         el.className = 'item';
         el.style.setProperty('--d', (i % 6) * 65 + 'ms');
+
+        /* Optional photo. Skipped entirely when the item has no img,
+           so a half-photographed menu still looks deliberate. */
+        if(it.img){
+          var th = document.createElement('div');
+          th.className = 'thumb';
+          var ti = document.createElement('img');
+          ti.src = 'photos/' + it.img;
+          ti.alt = it[lang];
+          ti.loading = 'lazy';
+          ti.addEventListener('error', function(){ th.remove(); });
+          th.appendChild(ti);
+          el.appendChild(th);
+        }
 
         var body = document.createElement('div');
         body.className = 'item-body';
@@ -939,6 +1011,44 @@ footer{border-top:1px solid var(--faint);padding:52px 0 130px;font-size:14px;col
     }
   }
 
+  /* ── Photo gallery ────────────────────────────────────────────── */
+  function renderGallery(){
+    var sec = $('#gallery'), grid = $('#shots');
+    var photos = Array.isArray(MENU.photos) ? MENU.photos : [];
+
+    /* No photos listed → the section never appears. */
+    if(!photos.length){ sec.hidden = true; grid.innerHTML = ''; return; }
+    sec.hidden = false;
+    grid.innerHTML = '';
+
+    photos.forEach(function(ph){
+      var fig = document.createElement('figure');
+      fig.className = 'shot rv';
+
+      var img = document.createElement('img');
+      img.src = 'photos/' + ph.file;
+      img.alt = ph[lang] || ph.es || ph.en || '';
+      img.loading = 'lazy';
+      /* A filename that doesn't resolve drops that tile rather than
+         leaving a broken-image box on the page. */
+      img.addEventListener('error', function(){
+        fig.remove();
+        if(!grid.children.length) sec.hidden = true;
+      });
+      fig.appendChild(img);
+
+      var label = ph[lang] || ph.es || ph.en;
+      if(label){
+        var cap = document.createElement('figcaption');
+        cap.textContent = label;
+        fig.appendChild(cap);
+      }
+      grid.appendChild(fig);
+    });
+
+    observeItems(); // freshly built tiles need the reveal observer
+  }
+
   /* ── Marquee ──────────────────────────────────────────────────── */
   function renderMarquee(){
     var words = lang === 'es'
@@ -969,7 +1079,7 @@ footer{border-top:1px solid var(--faint);padding:52px 0 130px;font-size:14px;col
     $$('.langtog button').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang));
     });
-    applyStrings(); renderMenu(); renderHours(); renderMarquee();
+    applyStrings(); renderMenu(); renderGallery(); renderHours(); renderMarquee();
     syncHeaderOffset(); // menu re-render replaces the blocks, so re-apply
   }
 
